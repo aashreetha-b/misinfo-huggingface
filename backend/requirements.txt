@@ -1,0 +1,7 @@
+Flask==2.0.1
+Flask-Cors==3.0.10
+google-cloud-language==2.7.0
+google-api-python-client==2.44.0
+python-dotenv==0.21.0
+joblib==1.2.0
+werkzeug==2.0.3
