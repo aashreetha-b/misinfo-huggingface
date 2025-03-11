@@ -1,1 +1,4 @@
 .env
+backend/gcp_credentials.json
+gcp_credentials.json
+backend/gcp_credentials.json
