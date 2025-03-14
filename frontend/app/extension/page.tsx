@@ -1,71 +1,132 @@
-import Image from "next/image"
-import { DashboardLayout } from "@/components/dashboard-layout"
+import { Sidebar } from "@/components/layout/sidebar"
+import { Header } from "@/components/layout/header"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Steps, StepItem } from "@/components/steps"
+import { CheckCircle2, Download, AlertTriangle } from "lucide-react"
 
 export default function ExtensionPage() {
   return (
-    <DashboardLayout>
-      <div className="grid gap-6">
-        <h1 className="text-2xl font-bold tracking-tight">Browser Extension</h1>
+    <div className="min-h-screen bg-black text-white">
+      <Sidebar />
+      <div className="ml-64">
+        <Header title="Browser Extension" />
+        <div className="p-6">
+          <Card className="bg-gray-900 border-gray-800">
+            <CardContent className="p-6 space-y-8">
+              <section className="space-y-4">
+                <h2 className="text-2xl font-bold text-white">Misinformation Detection Extension</h2>
+                <p className="text-gray-300">Detect misinformation and hate speech as you browse the web</p>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Misinformation Detection Extension</CardTitle>
-            <CardDescription>Detect misinformation and hate speech as you browse the web</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex flex-col items-center justify-center gap-4 rounded-lg bg-muted p-6 sm:flex-row">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary">
-                <Image
-                  src="/placeholder.svg?height=64&width=64"
-                  alt="Extension icon"
-                  width={64}
-                  height={64}
-                  className="rounded-full"
-                />
-              </div>
-              <div className="text-center sm:text-left">
-                <h3 className="text-lg font-medium">SDG Misinformation Detector</h3>
-                <p className="text-sm text-muted-foreground">Version 1.0.0 | Chrome, Firefox, Edge</p>
-              </div>
-            </div>
+                <div className="bg-gray-800 p-6 rounded-lg border border-gray-700 flex items-center justify-between mt-6">
+                  <div className="flex items-center gap-4">
+                    <div className="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center">
+                      <AlertTriangle className="h-8 w-8 text-red-500" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">SDG Misinformation Detector</h3>
+                      <p className="text-gray-400">Version 1.0.0 | Chrome, Firefox, Edge</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
 
-            <div>
-              <h3 className="mb-4 text-lg font-medium">Installation Guide</h3>
-              <Steps>
-                <StepItem title="Download the Extension">
-                  Click the download button below to get the latest version of the extension.
-                </StepItem>
-                <StepItem title="Open Chrome Extensions">Navigate to chrome://extensions in your browser.</StepItem>
-                <StepItem title="Enable Developer Mode">Toggle on "Developer mode" in the top-right corner.</StepItem>
-                <StepItem title="Load Unpacked">
-                  Click "Load unpacked" and select the downloaded extension folder.
-                </StepItem>
-                <StepItem title="Pin the Extension">
-                  Click the puzzle piece icon in your browser toolbar and pin the extension for easy access.
-                </StepItem>
-              </Steps>
-            </div>
+              <section className="space-y-4">
+                <h3 className="text-xl font-bold text-white">Installation Guide</h3>
 
-            <div>
-              <h3 className="mb-4 text-lg font-medium">Features</h3>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Analyze any text on a webpage by selecting it and right-clicking</li>
-                <li>Automatic detection of potentially misleading headlines</li>
-                <li>Real-time analysis of social media posts</li>
-                <li>Detailed breakdown of sentiment and toxicity scores</li>
-                <li>Integration with our fact-checking database</li>
-              </ul>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button className="w-full">Download Extension (Coming Soon)</Button>
-          </CardFooter>
-        </Card>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="h-8 w-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 flex-shrink-0">
+                      1
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Download the Extension</h4>
+                      <p className="text-gray-300 mb-2">
+                        Click the download button below to get the latest version of the extension.
+                      </p>
+                      <Button className="bg-red-500 hover:bg-red-600 text-white gap-2">
+                        <Download className="h-4 w-4" />
+                        Download Extension (Coming Soon)
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="h-8 w-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 flex-shrink-0">
+                      2
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Open Chrome Extensions</h4>
+                      <p className="text-gray-300">Navigate to chrome://extensions in your browser.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="h-8 w-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 flex-shrink-0">
+                      3
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Enable Developer Mode</h4>
+                      <p className="text-gray-300">Toggle on "Developer mode" in the top-right corner.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="h-8 w-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 flex-shrink-0">
+                      4
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Load Unpacked</h4>
+                      <p className="text-gray-300">Click "Load unpacked" and select the downloaded extension folder.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="h-8 w-8 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 flex-shrink-0">
+                      5
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-white">Pin the Extension</h4>
+                      <p className="text-gray-300">
+                        Click the puzzle piece icon in your browser toolbar and pin the extension for easy access.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <h3 className="text-xl font-bold text-white">Features</h3>
+
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                    <span className="text-gray-300">
+                      Analyze any text on a webpage by selecting it and right-clicking
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                    <span className="text-gray-300">Automatic detection of potentially misleading headlines</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                    <span className="text-gray-300">Real-time analysis of social media posts</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                    <span className="text-gray-300">Detailed breakdown of sentiment and toxicity scores</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5" />
+                    <span className="text-gray-300">Integration with our fact-checking database</span>
+                  </li>
+                </ul>
+              </section>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </DashboardLayout>
+    </div>
   )
 }
 
