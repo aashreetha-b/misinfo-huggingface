@@ -62,6 +62,8 @@ export function MisinformationDashboard() {
       }
 
       const data = await response.json()
+      console.log("API Response:", data)
+
       setCurrentResult(data)
 
       // Calculate overall score based on sentiment and toxicity

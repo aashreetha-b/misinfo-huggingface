@@ -1,43 +1,71 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Send } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Send } from "lucide-react";
 
 export function FactCheckingAssistant() {
-  const [question, setQuestion] = useState("")
+  const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([
     {
       role: "assistant",
       content: "Hello! I'm your fact-checking assistant. Ask me about any information you'd like to verify.",
     },
-  ])
+  ]);
+  const [factCheckResult, setFactCheckResult] = useState({
+    claim: "",
+    source: "",
+    verdict: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!question.trim()) return
+  // 🛠️ handleSubmit function properly closed now
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!question.trim()) return;
 
     // Add user message
-    setMessages((prev) => [...prev, { role: "user", content: question }])
+    setMessages((prev) => [...prev, { role: "user", content: question }]);
 
-    // Simulate response (in a real app, this would call an API)
-    setTimeout(() => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/fact_check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: question }),
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: "Sorry, I couldn't verify that statement." },
+        ]);
+      } else {
+        setFactCheckResult({
+          claim: question,
+          source: data.source || "Unknown source",
+          verdict: data.verdict || "No verdict",
+        });
+
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: `Fact check complete: ${data.verdict}` },
+        ]);
+      }
+    } catch (error) {
+      console.error("Fact-checking failed:", error);
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content:
-            "This is a placeholder response. In the future, this will connect to a fact-checking AI to provide accurate information.",
-        },
-      ])
-    }, 1000)
+        { role: "assistant", content: "Oops! Something went wrong. Please try again later." },
+      ]);
+    }
 
-    setQuestion("")
-  }
+    // ✅ Missing this part before: reset question input
+    setQuestion("");
+  }; // 🔥 Missing closing bracket for handleSubmit added here!
 
   return (
     <Card className="bg-gray-900 border-gray-800 h-[400px] flex flex-col">
@@ -59,6 +87,36 @@ export function FactCheckingAssistant() {
             </div>
           ))}
         </div>
+        <div className="fact-check-result mt-4 p-4 border-t border-gray-700">
+  {factCheckResult.claim ? (
+    <>
+      <h3 className="text-white text-lg font-bold">Fact Check Result</h3>
+      <p className="text-gray-400">
+        <strong>Claim:</strong> {factCheckResult.claim}
+      </p>
+      <p className="text-gray-400">
+        <strong>Source:</strong> {factCheckResult.source}
+      </p>
+      <p className="text-gray-400">
+        <strong>Verdict:</strong>{" "}
+        <span
+          className={`px-2 py-1 rounded ${
+            factCheckResult.verdict.toLowerCase() === "true"
+              ? "bg-green-500"
+              : factCheckResult.verdict.toLowerCase() === "false"
+              ? "bg-red-500"
+              : "bg-yellow-500"
+          }`}
+        >
+          {factCheckResult.verdict}
+        </span>
+      </p>
+    </>
+  ) : (
+    <p className="text-gray-500">Type a statement to fact-check!</p>
+  )}
+</div>
+
         <form onSubmit={handleSubmit} className="flex gap-2">
           <Input
             placeholder="Type your question..."
@@ -72,6 +130,5 @@ export function FactCheckingAssistant() {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }
-
